@@ -72,9 +72,11 @@ class Commit:
 
         if dry_run:
             raise DryRunExit()
-
-        c = git.commit(m)
-
+        
+        #breakpoint()
+        args = " ".join(self.arguments["unknown"])
+        c = git.commit(m, args)
+        
         if c.return_code != 0:
             out.error(c.err)
 

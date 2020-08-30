@@ -262,10 +262,10 @@ def main():
 
     # This is for the command required constraint in 2.0
     try:
-        args = parser.parse_args()
+        #args = parser.parse_args()
+        args,unknown= parser.parse_known_args()
     except TypeError:
         raise NoCommandFoundError()
-
     if args.name:
         conf.update({"name": args.name})
     elif not args.name and not conf.path:
@@ -274,8 +274,8 @@ def main():
     if args.debug:
         logging.getLogger("commitizen").setLevel(logging.DEBUG)
         sys.excepthook = commitizen_debug_excepthook
-
-    args.func(conf, vars(args))()
+        
+    args.func(conf,  {**vars(args) , **{"unknown":unknown}})()
 
 
 if __name__ == "__main__":
